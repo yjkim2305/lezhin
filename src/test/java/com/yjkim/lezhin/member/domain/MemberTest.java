@@ -8,6 +8,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.time.LocalDate;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -59,6 +61,20 @@ class MemberTest {
         assertThat(MemberErrorType.NOT_EXIST_USER_PASSWORD.getMessage()).isEqualTo(exception.getMessage());
         assertThat(MemberErrorType.NOT_EXIST_USER_PASSWORD.name()).isEqualTo(exception.getErrorType().getErrorCode());
 
+    }
+
+    @Test
+    @DisplayName("만 19세 기준 성인 여부 테스트")
+    void idAdultTest() {
+        Member minorMember = Member.builder()
+                .birthDate(LocalDate.of(2025, 2, 1))
+                .build();
+        assertThat(minorMember.isAdult()).isFalse();
+
+        Member adultMember = Member.builder()
+                .birthDate(LocalDate.of(2004,2,25))
+                .build();
+        assertThat(adultMember.isAdult()).isTrue();
     }
 
 }

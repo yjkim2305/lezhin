@@ -12,8 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -46,7 +46,13 @@ public class Member {
     }
 
     public boolean isAdult() {
-        return Period.between(this.birthDate, LocalDate.now()).getYears() >= 19;
+        LocalDate today = LocalDate.now();
+        int age = (int) ChronoUnit.YEARS.between(birthDate, today);
+        if (today.isBefore(birthDate.plusYears(age))) {
+            age--;
+        }
+
+        return age >= 19;
     }
 
     public static Member createWithEncodedPassword(MemberCreateCommand memberCreateCommand, BCryptPasswordEncoder bCryptPasswordEncoder) {
