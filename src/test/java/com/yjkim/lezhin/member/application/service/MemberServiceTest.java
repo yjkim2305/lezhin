@@ -19,7 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class AuthServiceTest {
+class MemberServiceTest {
 
     @Mock
     private MemberRepository memberRepository;
@@ -56,6 +56,21 @@ class AuthServiceTest {
 
         assertThat(MemberErrorType.EXIST_USER.getMessage()).isEqualTo(exception.getMessage());
         assertThat(MemberErrorType.EXIST_USER.name()).isEqualTo(exception.getErrorType().getErrorCode());
+    }
+
+    @Test
+    @DisplayName("존재하는 사용자에 대해 조회할 수 있다.")
+    void findByMemberEmail_Success() {
+        Member member = Member.builder()
+                .memberEmail("test@kidaristudio.com")
+                .memberName("test")
+                .password("password")
+                .build();
+
+        when(memberRepository.findByMemberEmail(member.getMemberEmail())).thenReturn(member);
+
+        Member findMember = memberService.findByMemberEmail(member.getMemberEmail());
+        assertThat(findMember).isEqualTo(member);
     }
 
 }
