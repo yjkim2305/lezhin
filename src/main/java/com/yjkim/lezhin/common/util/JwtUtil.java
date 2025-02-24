@@ -28,11 +28,11 @@ public class JwtUtil {
         this.refreshTokenExpiration = refreshTokenExpiration;
     }
 
-    public String getUserId(String token) {
+    public String getMemberId(String token) {
         return Jwts.parser().verifyWith(secretKey).build()
                 .parseSignedClaims(token)
                 .getPayload()
-                .get("userId", String.class);
+                .get("memberId", String.class);
     }
 
     public String getCategory(String token) {
@@ -50,20 +50,20 @@ public class JwtUtil {
                 .before(new Date());
     }
 
-    public String createAccessJwt(String category, String userId) {
+    public String createAccessJwt(String category, String memberId) {
         return Jwts.builder()
                 .claim("category", category)
-                .claim("userId", userId)
+                .claim("memberId", memberId)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + accessTokenExpiration))
                 .signWith(secretKey)
                 .compact();
     }
 
-    public String createRefreshJwt(String category, String userId) {
+    public String createRefreshJwt(String category, String memberId) {
         return Jwts.builder()
                 .claim("category", category)
-                .claim("userId", userId)
+                .claim("memberId", memberId)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + refreshTokenExpiration))
                 .signWith(secretKey)
