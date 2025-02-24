@@ -8,3 +8,18 @@ Content-Type: application/json
   "memberName": "김영준",
   "birthDate": "19910828"
 }
+
+### 로그인
+POST localhost:8080/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "memberEmail" : "test@kidaristudio.com",
+  "password": "securePassword123"
+}
+> {%
+    client.global.set("authorizationToken", "Bearer " + response.body.data.accessToken);
+    client.global.set("refreshToken", response.body.data.refreshToken);
+    client.log("Auth Token: " + client.global.get("authorizationToken"));
+    client.log("Refresh Token: " + client.global.get("refreshToken"));
+%}
