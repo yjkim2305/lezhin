@@ -1,0 +1,10 @@
+### 회원가입
+POST http://localhost:8080/api/v1/auth/signup
+Content-Type: application/json
+
+{
+  "memberEmail": "test@kidaristudio.com",
+  "password": "securePassword123",
+  "memberName": "김영준",
+  "birthDate": "19910828"
+}
