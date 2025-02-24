@@ -1,8 +1,11 @@
 package com.yjkim.lezhin.content.domain;
 
+import com.yjkim.lezhin.common.exception.CoreException;
+import com.yjkim.lezhin.content.api.exception.ContentErrorType;
 import com.yjkim.lezhin.content.application.dto.ContentCreateCommand;
 import com.yjkim.lezhin.content.domain.enums.ContentType;
 import com.yjkim.lezhin.content.domain.enums.PriceType;
+import com.yjkim.lezhin.content.infrastructure.entity.ContentEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,6 +37,12 @@ public class Content {
         this.updatedDate = updatedDate;
     }
 
+    public void validateAdultAccess(boolean isAdult) {
+        if (contentType == ContentType.ADULT && !isAdult) {
+            throw new CoreException(ContentErrorType.FORBIDDEN_ADULT_CONTENT);
+        }
+    }
+
     public static Content from(ContentCreateCommand contentCreateCommand) {
         return Content.builder()
                 .title(contentCreateCommand.title())
@@ -41,6 +50,19 @@ public class Content {
                 .contentType(contentCreateCommand.contentType())
                 .priceType(contentCreateCommand.priceType())
                 .totalEpisodes(contentCreateCommand.totalEpisodes())
+                .build();
+    }
+
+    public static Content from(ContentEntity contentEntity) {
+        return Content.builder()
+                .id(contentEntity.getId())
+                .title(contentEntity.getTitle())
+                .author(contentEntity.getAuthor())
+                .contentType(contentEntity.getContentType())
+                .priceType(contentEntity.getPriceType())
+                .totalEpisodes(contentEntity.getTotalEpisodes())
+                .createdDate(contentEntity.getCreatedDate())
+                .updatedDate(contentEntity.getUpdatedDate())
                 .build();
     }
 }

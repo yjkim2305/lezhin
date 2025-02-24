@@ -1,21 +1,22 @@
 package com.yjkim.lezhin.content.api;
 
 import com.yjkim.lezhin.common.api.response.ApiRes;
+import com.yjkim.lezhin.common.util.JwtUtil;
 import com.yjkim.lezhin.content.api.request.ContentCreateRequest;
+import com.yjkim.lezhin.content.api.response.ContentDetailResponse;
 import com.yjkim.lezhin.content.application.dto.ContentCreateCommand;
 import com.yjkim.lezhin.content.application.service.ContentService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/content")
 public class ContentController {
     private final ContentService contentService;
+    private final JwtUtil jwtUtil;
 
     /***
      * 새로운 작품을 등록합니다.
@@ -34,4 +35,15 @@ public class ContentController {
         contentService.registerContent(ContentCreateCommand.from(rq));
         return ApiRes.createSuccessWithNoContent();
     }
+
+
+    @GetMapping("/{contentId}")
+    public ApiRes<ContentDetailResponse> getContent(@PathVariable(value = "contentId") Long contentId, HttpServletRequest request) {
+        String token = jwtUtil.getJwtFromRequest(request);
+        String memberId = jwtUtil.getMemberId(token);
+        boolean isAdult = jwtUtil.getIsAdult(token);
+        return ApiRes.createSuccess(ContentDetailResponse.from(contentService.getContent(contentId, Long.parseLong(memberId), isAdult)));
+    }
+
+
 }
