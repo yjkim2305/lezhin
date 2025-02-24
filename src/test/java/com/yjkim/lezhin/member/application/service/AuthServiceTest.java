@@ -9,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -28,18 +30,19 @@ class AuthServiceTest {
                 .memberEmail("test@kidaristudio.com")
                 .memberName("test")
                 .password("password")
+                .birthDate(LocalDate.of(1991,8,28))
                 .build();
 
         String accessToken = "accessToken";
         String refreshToken = "refreshToken";
 
-        when(jwtUtil.createAccessJwt("access", member.getId().toString())).thenReturn(accessToken);
-        when(jwtUtil.createRefreshJwt("refresh", member.getId().toString())).thenReturn(refreshToken);
+        when(jwtUtil.createAccessJwt("access", member.getId().toString(), member.isAdult())).thenReturn(accessToken);
+        when(jwtUtil.createRefreshJwt("refresh", member.getId().toString(), member.isAdult())).thenReturn(refreshToken);
 
         authService.generateTokens(member);
 
-        verify(jwtUtil, times(1)).createAccessJwt("access", member.getId().toString());
-        verify(jwtUtil, times(1)).createRefreshJwt("refresh", member.getId().toString());
+        verify(jwtUtil, times(1)).createAccessJwt("access", member.getId().toString(), member.isAdult());
+        verify(jwtUtil, times(1)).createRefreshJwt("refresh", member.getId().toString(), member.isAdult());
     }
 
     @Test

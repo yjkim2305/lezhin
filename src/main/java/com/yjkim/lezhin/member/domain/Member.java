@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
 @Getter
@@ -42,6 +43,10 @@ public class Member {
         if (!matches) {
             throw new CoreException(MemberErrorType.NOT_EXIST_USER_PASSWORD);
         }
+    }
+
+    public boolean isAdult() {
+        return Period.between(this.birthDate, LocalDate.now()).getYears() >= 19;
     }
 
     public static Member createWithEncodedPassword(MemberCreateCommand memberCreateCommand, BCryptPasswordEncoder bCryptPasswordEncoder) {

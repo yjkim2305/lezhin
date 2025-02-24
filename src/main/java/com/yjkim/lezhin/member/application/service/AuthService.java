@@ -13,8 +13,8 @@ public class AuthService {
     private final JwtUtil jwtUtil;
 
     public MemberLoginDto generateTokens(Member member) {
-        String accessToken = jwtUtil.createAccessJwt("access", member.getId().toString());
-        String refreshToken = jwtUtil.createRefreshJwt("refresh", member.getId().toString());
+        String accessToken = jwtUtil.createAccessJwt("access", member.getId().toString(), member.isAdult());
+        String refreshToken = jwtUtil.createRefreshJwt("refresh", member.getId().toString(), member.isAdult());
 
         //refresh token DB 적재 필요
 

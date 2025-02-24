@@ -42,6 +42,13 @@ public class JwtUtil {
                 .get("category", String.class);
     }
 
+    public Boolean getIsAdult(String token) {
+        return Jwts.parser().verifyWith(secretKey).build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .get("isAdult", Boolean.class);
+    }
+
     public Boolean isExpired(String token) {
         return Jwts.parser().verifyWith(secretKey).build()
                 .parseSignedClaims(token)
@@ -50,20 +57,22 @@ public class JwtUtil {
                 .before(new Date());
     }
 
-    public String createAccessJwt(String category, String memberId) {
+    public String createAccessJwt(String category, String memberId, boolean isAdult) {
         return Jwts.builder()
                 .claim("category", category)
                 .claim("memberId", memberId)
+                .claim("isAdult", isAdult)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + accessTokenExpiration))
                 .signWith(secretKey)
                 .compact();
     }
 
-    public String createRefreshJwt(String category, String memberId) {
+    public String createRefreshJwt(String category, String memberId, boolean isAdult) {
         return Jwts.builder()
                 .claim("category", category)
                 .claim("memberId", memberId)
+                .claim("isAdult", isAdult)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + refreshTokenExpiration))
                 .signWith(secretKey)
