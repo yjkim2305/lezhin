@@ -1,6 +1,7 @@
 package com.yjkim.lezhin.member.api.request;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 public record MemberCreateRequest(
         @NotBlank(message = "이메일은 필수 입력 값입니다.")
@@ -9,6 +10,7 @@ public record MemberCreateRequest(
         String password,
         String memberName,
         @NotBlank(message = "생년월인은 필수 입력 값이며, YYYYMMDD 형식이어야 합니다.")
+        @Pattern(regexp = "\\d{8}", message = "생년월일은 YYYYMMDD 형식이어야 합니다.")
         String birthDate
 ) {
 }
