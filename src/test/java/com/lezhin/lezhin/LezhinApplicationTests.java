@@ -1,4 +1,4 @@
-package com.szs.lezhin;
+package com.lezhin.lezhin;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

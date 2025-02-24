@@ -1,6 +1,6 @@
-package com.szs.lezhin.common.exception;
+package com.lezhin.lezhin.common.exception;
 
-import com.szs.lezhin.common.api.response.ApiRes;
+import com.lezhin.lezhin.common.api.response.ApiRes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

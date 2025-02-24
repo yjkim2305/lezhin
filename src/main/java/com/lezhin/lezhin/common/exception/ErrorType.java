@@ -1,4 +1,4 @@
-package com.szs.lezhin.common.exception;
+package com.lezhin.lezhin.common.exception;
 
 import org.springframework.http.HttpStatus;
 

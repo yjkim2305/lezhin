@@ -1,4 +1,4 @@
-package com.szs.lezhin.common.config;
+package com.lezhin.lezhin.common.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
