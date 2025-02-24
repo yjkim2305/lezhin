@@ -1,4 +1,4 @@
-package com.lezhin.lezhin.common.domain.entity;
+package com.yjkim.lezhin.common.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

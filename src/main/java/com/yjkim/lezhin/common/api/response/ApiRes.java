@@ -1,4 +1,4 @@
-package com.lezhin.lezhin.common.api.response;
+package com.yjkim.lezhin.common.api.response;
 
 import lombok.AccessLevel;
 import lombok.Getter;
