@@ -3,6 +3,7 @@ package com.yjkim.lezhin.member.application.service;
 import com.yjkim.lezhin.common.util.JwtUtil;
 import com.yjkim.lezhin.member.application.dto.MemberLoginDto;
 import com.yjkim.lezhin.member.domain.Member;
+import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,10 @@ public class AuthService {
         //refresh token DB 적재 필요
 
         return MemberLoginDto.of(accessToken, refreshToken);
+    }
+
+    public Cookie createRefreshCookie(String refreshToken) {
+        return jwtUtil.createCookie("refresh", refreshToken);
     }
 
 }
