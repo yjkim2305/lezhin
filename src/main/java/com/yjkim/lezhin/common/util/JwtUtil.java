@@ -1,5 +1,8 @@
 package com.yjkim.lezhin.common.util;
 
+import com.yjkim.lezhin.common.exception.TokenErrorType;
+import com.yjkim.lezhin.common.exception.CoreException;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -49,12 +52,17 @@ public class JwtUtil {
                 .get("isAdult", Boolean.class);
     }
 
-    public Boolean isExpired(String token) {
-        return Jwts.parser().verifyWith(secretKey).build()
-                .parseSignedClaims(token)
-                .getPayload()
-                .getExpiration()
-                .before(new Date());
+    public void isExpired(String token) {
+        try {
+            Jwts.parser().verifyWith(secretKey).build()
+                    .parseSignedClaims(token)
+                    .getPayload()
+                    .getExpiration()
+                    .before(new Date());
+        } catch (ExpiredJwtException e) {
+            throw new CoreException(TokenErrorType.EXPIRE_TOKEN);
+        }
+
     }
 
     public String createAccessJwt(String category, String memberId, boolean isAdult) {
@@ -77,6 +85,16 @@ public class JwtUtil {
                 .expiration(new Date(System.currentTimeMillis() + refreshTokenExpiration))
                 .signWith(secretKey)
                 .compact();
+    }
+
+    public void validateAccessToken(String token, String tokenCategory) {
+        // 만료 여부 확인
+        isExpired(token);
+
+        String category = getCategory(token);
+        if (!tokenCategory.equals(category)) {
+            throw new CoreException(TokenErrorType.INVALID_TOKEN);
+        }
     }
 
     public String getJwtFromRequest(HttpServletRequest request) {
