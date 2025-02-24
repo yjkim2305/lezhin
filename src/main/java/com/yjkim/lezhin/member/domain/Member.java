@@ -1,6 +1,9 @@
 package com.yjkim.lezhin.member.domain;
 
+import com.yjkim.lezhin.common.exception.CoreException;
+import com.yjkim.lezhin.member.api.exception.MemberErrorType;
 import com.yjkim.lezhin.member.application.dto.MemberCreateCommand;
+import com.yjkim.lezhin.member.infrastructure.entity.MemberEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,12 +37,31 @@ public class Member {
         this.updatedDate = updatedDate;
     }
 
+    public void validatePassword(String password, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        boolean matches = bCryptPasswordEncoder.matches(password, this.password);
+        if (!matches) {
+            throw new CoreException(MemberErrorType.NOT_EXIST_USER_PASSWORD);
+        }
+    }
+
     public static Member createWithEncodedPassword(MemberCreateCommand memberCreateCommand, BCryptPasswordEncoder bCryptPasswordEncoder) {
         return Member.builder()
                 .memberEmail(memberCreateCommand.memberEmail())
                 .password(bCryptPasswordEncoder.encode(memberCreateCommand.password()))
                 .memberName(memberCreateCommand.memberName())
                 .birthDate(LocalDate.parse(memberCreateCommand.birthDate(), DateTimeFormatter.ofPattern("yyyyMMdd")))
+                .build();
+    }
+
+    public static Member from(MemberEntity memberEntity) {
+        return Member.builder()
+                .id(memberEntity.getId())
+                .memberEmail(memberEntity.getMemberEmail())
+                .password(memberEntity.getPassword())
+                .memberName(memberEntity.getMemberName())
+                .birthDate(memberEntity.getBirthDate())
+                .createdDate(memberEntity.getCreatedDate())
+                .updatedDate(memberEntity.getUpdatedDate())
                 .build();
     }
 

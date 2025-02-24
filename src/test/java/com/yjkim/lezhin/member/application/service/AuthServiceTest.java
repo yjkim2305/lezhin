@@ -28,7 +28,7 @@ class AuthServiceTest {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @InjectMocks
-    private AuthService authService;
+    private MemberService memberService;
 
     @Test
     @DisplayName("회원가입 처음하는 사용자는 회원가입에 성공해야 한다.")
@@ -38,7 +38,7 @@ class AuthServiceTest {
         when(memberRepository.existsByMemberEmail(memberCreateCommand.memberEmail())).thenReturn(false);
         when(bCryptPasswordEncoder.encode(memberCreateCommand.password())).thenReturn("encodedPassword");
 
-        authService.signUpMember(memberCreateCommand);
+        memberService.signUpMember(memberCreateCommand);
 
         verify(memberRepository, times(1)).signUpMember(any(Member.class));
     }
@@ -51,7 +51,7 @@ class AuthServiceTest {
         when(memberRepository.existsByMemberEmail(memberCreateCommand.memberEmail())).thenReturn(true);
 
         CoreException exception = assertThrows(CoreException.class, () -> {
-            authService.signUpMember(memberCreateCommand);
+            memberService.signUpMember(memberCreateCommand);
         });
 
         assertThat(MemberErrorType.EXIST_USER.getMessage()).isEqualTo(exception.getMessage());

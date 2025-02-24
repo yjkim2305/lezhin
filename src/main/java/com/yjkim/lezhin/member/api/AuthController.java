@@ -3,7 +3,7 @@ package com.yjkim.lezhin.member.api;
 import com.yjkim.lezhin.common.api.response.ApiRes;
 import com.yjkim.lezhin.member.api.request.MemberCreateRequest;
 import com.yjkim.lezhin.member.application.dto.MemberCreateCommand;
-import com.yjkim.lezhin.member.application.service.AuthService;
+import com.yjkim.lezhin.member.application.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/auth")
 public class AuthController {
 
-    private final AuthService authService;
+    private final MemberService memberService;
 
     @PostMapping("/signup")
     public ApiRes<?> signUpMember(@Valid @RequestBody MemberCreateRequest rq) {
-        authService.signUpMember(MemberCreateCommand.from(rq));
+        memberService.signUpMember(MemberCreateCommand.from(rq));
         return ApiRes.createSuccessWithNoContent();
     }
 }

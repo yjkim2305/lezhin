@@ -1,29 +1,23 @@
 package com.yjkim.lezhin.member.application.service;
 
-import com.yjkim.lezhin.common.exception.CoreException;
-import com.yjkim.lezhin.member.api.exception.MemberErrorType;
-import com.yjkim.lezhin.member.application.dto.MemberCreateCommand;
-import com.yjkim.lezhin.member.application.repository.MemberRepository;
+import com.yjkim.lezhin.common.util.JwtUtil;
+import com.yjkim.lezhin.member.application.dto.MemberLoginDto;
 import com.yjkim.lezhin.member.domain.Member;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService {
+    private final JwtUtil jwtUtil;
 
-    private final MemberRepository memberRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    public MemberLoginDto generateTokens(Member member) {
+        String accessToken = jwtUtil.createAccessJwt("access", member.getId().toString());
+        String refreshToken = jwtUtil.createRefreshJwt("refresh", member.getId().toString());
 
-    public void signUpMember(MemberCreateCommand memberCreateCommand) {
+        //refresh token DB 적재 필요
 
-        if (memberRepository.existsByMemberEmail(memberCreateCommand.memberEmail())) {
-            throw new CoreException(MemberErrorType.EXIST_USER);
-        }
-
-        Member member = Member.createWithEncodedPassword(memberCreateCommand, bCryptPasswordEncoder);
-        memberRepository.signUpMember(member);
+        return MemberLoginDto.of(accessToken, refreshToken);
     }
 
 }
