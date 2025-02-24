@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: lezhin
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:lezhin
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+  jpa:
+    show-sql: false
+    generate-ddl: false
+    open-in-view: false
+    hibernate:
+      ddl-auto: create-drop
+
+  jwt:
+    secret: "and0c2VjcmV0a2V5and0c2VjcmV0a2V5and0c2VjcmV0a2V5and0c2VjcmV0a2V5and0c2VjcmV0a2V5"
+    access:
+      expiration: 600000 # 10?
+    refresh:
+      expiration: 86400000 # 24??
+
+logging:
+  level:
+    ROOT: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql: TRACE
+    org.springframework.cloud.openfeign: DEBUG
+    feign: DEBUG
