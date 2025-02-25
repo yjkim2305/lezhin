@@ -43,6 +43,12 @@ public class Content {
         }
     }
 
+    public void validateEpisode(int episodeNumber) {
+        if (episodeNumber > totalEpisodes) {
+            throw new CoreException(ContentErrorType.FORBIDDEN_EPISODE_CONTENT);
+        }
+    }
+
     public static Content from(ContentCreateCommand contentCreateCommand) {
         return Content.builder()
                 .title(contentCreateCommand.title())

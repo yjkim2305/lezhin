@@ -5,7 +5,8 @@ import org.springframework.http.HttpStatus;
 
 public enum ContentErrorType implements ErrorType {
     NOT_EXIST_CONTENT(HttpStatus.NOT_FOUND, "해당 작품이 존재하지 않습니다."),
-    FORBIDDEN_ADULT_CONTENT(HttpStatus.FORBIDDEN, "해당 작품은 성인 전용입니다.")
+    FORBIDDEN_ADULT_CONTENT(HttpStatus.FORBIDDEN, "해당 작품은 성인 전용입니다."),
+    FORBIDDEN_EPISODE_CONTENT(HttpStatus.FORBIDDEN, "해당 작품에 해당 에피소드가 존재하지 않습니다.")
     ;
 
     private final HttpStatus httpStatus;

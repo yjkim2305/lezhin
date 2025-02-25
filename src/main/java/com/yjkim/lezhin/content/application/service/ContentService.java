@@ -19,6 +19,7 @@ public class ContentService {
         contentRepository.registerContent(Content.from(contentCreateCommand));
     }
 
+    //작품 조회 후 조회에 대한 이력 저장
     public ContentResultDto getContent(Long contentId, Long memberId, boolean isAdult) {
         Content content = contentRepository.getContent(contentId);
         content.validateAdultAccess(isAdult);
@@ -30,5 +31,11 @@ public class ContentService {
 
     public void deleteContent(Long contentId) {
         contentRepository.deleteContent(contentId);
+    }
+
+    public void validateContent(Long contentId, boolean isAdult, int episodeNumber) {
+        Content content = contentRepository.getContent(contentId);
+        content.validateAdultAccess(isAdult);
+        content.validateEpisode(episodeNumber);
     }
 }
