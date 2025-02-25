@@ -31,4 +31,9 @@ public class ContentViewHistoryRepositoryImpl implements ContentViewHistoryRepos
     public List<TopContentViewResult> findTop10ContentViewHistories(Long memberId) {
         return contentViewHistoryJpaRepository.findTop10ContentViewHistories(memberId);
     }
+
+    @Override
+    public void deleteContentViewHistory(Long contentId) {
+        contentViewHistoryJpaRepository.deleteByContentId(contentId);
+    }
 }

@@ -23,4 +23,9 @@ public class ContentRepositoryImpl implements ContentRepository {
         return Content.from(contentJpaRepository.findById(contentId).orElseThrow(
                 () -> new CoreException(ContentErrorType.NOT_EXIST_CONTENT)));
     }
+
+    @Override
+    public void deleteContent(Long contentId) {
+        contentJpaRepository.deleteById(contentId);
+    }
 }

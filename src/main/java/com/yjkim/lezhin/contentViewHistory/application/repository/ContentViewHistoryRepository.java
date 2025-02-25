@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ContentViewHistoryRepository {
     void registerContentViewHistory(ContentViewHistory contentViewHistory);
-
     Page<ContentViewResult> findContentViewHistories(Long contentId, Pageable pageable);
     List<TopContentViewResult> findTop10ContentViewHistories(Long memberId);
+    void deleteContentViewHistory(Long contentId);
 }

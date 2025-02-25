@@ -27,4 +27,8 @@ public class ContentViewHistoryService {
     public List<TopContentViewResult> findTop10ContentViewHistories(Long memberId) {
         return contentViewHistoryRepository.findTop10ContentViewHistories(memberId);
     }
+
+    public void deleteContentViewHistory(Long contentId) {
+        contentViewHistoryRepository.deleteContentViewHistory(contentId);
+    }
 }

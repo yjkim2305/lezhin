@@ -6,6 +6,7 @@ import com.yjkim.lezhin.content.api.request.ContentCreateRequest;
 import com.yjkim.lezhin.content.api.response.ContentDetailResponse;
 import com.yjkim.lezhin.content.application.dto.ContentCreateCommand;
 import com.yjkim.lezhin.content.application.service.ContentService;
+import com.yjkim.lezhin.content.facade.ContentFacade;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class ContentController {
     private final ContentService contentService;
     private final JwtUtil jwtUtil;
+    private final ContentFacade contentFacade;
 
     /***
      * 새로운 작품을 등록합니다.
@@ -50,6 +52,18 @@ public class ContentController {
         String memberId = jwtUtil.getMemberId(token);
         boolean isAdult = jwtUtil.getIsAdult(token);
         return ApiRes.createSuccess(ContentDetailResponse.from(contentService.getContent(contentId, Long.parseLong(memberId), isAdult)));
+    }
+
+    /***
+     * 특정 작품 삭제 및 작품 조회 이력 삭제
+     * @param contentId 작품 ID
+     * @return 성공적으로 삭제되었을 경우 응답 객체
+     *          - 성공 HTTP 200 OK
+     */
+    @DeleteMapping("/{contentId}")
+    public ApiRes<?> deleteContent(@PathVariable(value = "contentId") Long contentId) {
+        contentFacade.deleteContent(contentId);
+        return ApiRes.createSuccessWithNoContent();
     }
 
 

@@ -27,4 +27,8 @@ public class ContentService {
         applicationEventPublisher.publishEvent(new ContentViewEvent(contentId, memberId));
         return ContentResultDto.from(content);
     }
+
+    public void deleteContent(Long contentId) {
+        contentRepository.deleteContent(contentId);
+    }
 }
