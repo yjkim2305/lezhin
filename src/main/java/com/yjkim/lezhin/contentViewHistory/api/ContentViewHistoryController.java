@@ -25,7 +25,7 @@ public class ContentViewHistoryController {
      */
     @GetMapping("/{contentId}")
     public ApiRes<ContentViewHistoryResponse> getContentUserHistory(
-            @PathVariable("contentId") Long contentId,
+            @PathVariable(value = "contentId") Long contentId,
             Pageable pageable
     ) {
         return ApiRes.createSuccess(ContentViewHistoryResponse.from(contentViewHistoryService.findContentViewHistory(contentId, pageable)));
@@ -38,8 +38,8 @@ public class ContentViewHistoryController {
      * @return 가장 많이 조회한 상위 10개 작품 리스트
      */
     @GetMapping("/member/{memberId}/top-viewed")
-    public ApiRes<TopContentViewHistoryResponse> getUserTopViewedContents(
-            @PathVariable("memberId") Long memberId
+    public ApiRes<TopContentViewHistoryResponse> getMemberTopViewedContents(
+            @PathVariable(value = "memberId") Long memberId
     ) {
         return ApiRes.createSuccess(
                 TopContentViewHistoryResponse.from(contentViewHistoryService.findTop10ContentViewHistories(memberId)));
