@@ -23,6 +23,9 @@ public class MemberContentEntity extends BaseTimeEntity {
     @Column(nullable = false)
     private Long contentId;
 
+    @Column(nullable = false)
+    private int episodeNumber;
+
     @Enumerated(EnumType.STRING)
     private PriceType priceType;
 
