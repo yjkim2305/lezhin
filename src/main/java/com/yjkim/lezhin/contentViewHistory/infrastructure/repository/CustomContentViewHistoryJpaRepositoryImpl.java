@@ -4,6 +4,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.yjkim.lezhin.contentViewHistory.application.dto.ContentViewResult;
+import com.yjkim.lezhin.contentViewHistory.application.dto.TopContentViewResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static com.yjkim.lezhin.content.infrastructure.entity.QContentEntity.contentEntity;
 import static com.yjkim.lezhin.contentViewHistory.infrastructure.entity.QContentViewHistoryEntity.contentViewHistoryEntity;
 import static com.yjkim.lezhin.member.infrastructure.entity.QMemberEntity.memberEntity;
 
@@ -43,5 +45,23 @@ public class CustomContentViewHistoryJpaRepositoryImpl implements CustomContentV
                 .where(contentViewHistoryEntity.contentId.eq(contentId));
 
         return PageableExecutionUtils.getPage(contentViewHistory, pageable, countQuery::fetchOne);
+    }
+
+    @Override
+    public List<TopContentViewResult> findTop10ContentViewHistories(Long memberId) {
+        return queryFactory
+                .select(Projections.constructor(TopContentViewResult.class,
+                        contentEntity.title,
+                        contentEntity.author,
+                        contentViewHistoryEntity.contentId.count()
+                        ))
+                .from(contentViewHistoryEntity)
+                .leftJoin(contentEntity).on(contentViewHistoryEntity.contentId.eq(contentEntity.id))
+                .where(contentViewHistoryEntity.memberId.eq(memberId))
+                .groupBy(contentViewHistoryEntity.contentId, contentEntity.title, contentEntity.author)
+                .orderBy(contentViewHistoryEntity.contentId.count().desc())
+                .limit(10)
+                .fetch();
+
     }
 }
