@@ -11,10 +11,15 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "content_view_history")
+@Table(name = "content_view_history",
+        indexes = {
+                @Index(name = "idx_content_view_history_content_id", columnList = "contentId"),
+                @Index(name = "idx_content_view_history_member_id", columnList = "memberId")
+        })
 public class ContentViewHistoryEntity extends BaseTimeEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
