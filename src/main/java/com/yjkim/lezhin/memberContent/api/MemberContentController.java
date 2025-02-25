@@ -3,20 +3,20 @@ package com.yjkim.lezhin.memberContent.api;
 import com.yjkim.lezhin.common.api.response.ApiRes;
 import com.yjkim.lezhin.common.util.JwtUtil;
 import com.yjkim.lezhin.memberContent.api.request.MemberContentCreateRequest;
+import com.yjkim.lezhin.memberContent.api.response.TopMemberContentResponse;
+import com.yjkim.lezhin.memberContent.application.service.MemberContentService;
 import com.yjkim.lezhin.memberContent.facade.MemberContentFacade;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/member-content")
 public class MemberContentController {
     private final MemberContentFacade memberContentFacade;
+    private final MemberContentService memberContentService;
     private final JwtUtil jwtUtil;
 
     /***
@@ -36,6 +36,20 @@ public class MemberContentController {
         boolean isAdult = jwtUtil.getIsAdult(token);
         memberContentFacade.purchaseContent(rq.contentId(), Long.parseLong(memberId), isAdult, rq.episodeNumber());
         return ApiRes.createSuccessWithNoContent();
+    }
+
+    /***
+     * 사용자가 가장 많이 구매한 작품 상위 10개 조회
+     * @param memberId 조회할 사용자의 ID
+     * @return 가장 많이 구매한 작품 상위 10개 리스트
+     */
+    @GetMapping("/member/{memberId}/top-viewd")
+    public ApiRes<TopMemberContentResponse> getMemberContentTopView(@PathVariable(value = "memberId") String memberId) {
+        return ApiRes.createSuccess(
+                TopMemberContentResponse.from(
+                        memberContentService.findTop10MemberContent(Long.parseLong(memberId))
+                )
+        );
     }
 
 }

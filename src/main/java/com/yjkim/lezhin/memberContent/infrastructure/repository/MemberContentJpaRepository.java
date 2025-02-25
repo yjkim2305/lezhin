@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
-public interface MemberContentJpaRepository extends JpaRepository<MemberContentEntity, Long> {
+public interface MemberContentJpaRepository extends JpaRepository<MemberContentEntity, Long>, CustomMemberContentJpaRepository {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT m FROM MemberContentEntity m WHERE m.memberId = :memberId AND m.contentId = :contentId AND m.episodeNumber = :episodeNumber")
     Optional<MemberContentEntity> findContentWithLock(Long memberId, Long contentId, int episodeNumber);

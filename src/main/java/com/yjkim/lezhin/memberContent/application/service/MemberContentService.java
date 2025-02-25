@@ -3,10 +3,13 @@ package com.yjkim.lezhin.memberContent.application.service;
 import com.yjkim.lezhin.common.exception.CoreException;
 import com.yjkim.lezhin.content.domain.enums.PriceType;
 import com.yjkim.lezhin.memberContent.api.exception.MemberContentErrorType;
+import com.yjkim.lezhin.memberContent.application.dto.TopMemberContentResult;
 import com.yjkim.lezhin.memberContent.application.repository.MemberContentRepository;
 import com.yjkim.lezhin.memberContent.domain.MemberContent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +24,10 @@ public class MemberContentService {
 
         //사용자 작품 구매
         memberContentRepository.registerMemberContent(MemberContent.of(memberId, contentId, episodeNumber, priceType));
+    }
+
+    public List<TopMemberContentResult> findTop10MemberContent(Long memberId) {
+        return memberContentRepository.findTop10MemberContent(memberId);
     }
 
 }
