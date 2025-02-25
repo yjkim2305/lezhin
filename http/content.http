@@ -4,7 +4,7 @@ Content-Type: application/json
 Authorization: {{ authorizationToken }}
 
 {
-  "title": "테스트 작품",
+  "title": "테스트 작품3",
   "author": "테스트 작가",
   "contentType": "GENERAL",
   "priceType": "FREE",
@@ -12,5 +12,9 @@ Authorization: {{ authorizationToken }}
 }
 
 ### 작품 조회
-GET http://localhost:8080/api/v1/content/1
+GET http://localhost:8080/api/v1/content/2
 Authorization: {{ authorizationToken }}
+
+### 특정 작품 삭제 및 작품 조회 이력 삭제
+DELETE http://localhost:8080/api/v1/content/1
+Authorization: {{authorizationToken}}
