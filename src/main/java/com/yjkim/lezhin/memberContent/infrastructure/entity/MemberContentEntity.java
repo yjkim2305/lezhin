@@ -30,11 +30,12 @@ public class MemberContentEntity extends BaseTimeEntity {
     private PriceType priceType;
 
     @Builder
-    private MemberContentEntity(Long id, Long memberId, Long contentId, PriceType priceType) {
+    private MemberContentEntity(Long id, Long memberId, Long contentId, PriceType priceType, int episodeNumber) {
         this.id = id;
         this.memberId = memberId;
         this.contentId = contentId;
         this.priceType = priceType;
+        this.episodeNumber = episodeNumber;
     }
 
     public static MemberContentEntity toEntity(MemberContent memberContent) {
@@ -42,6 +43,7 @@ public class MemberContentEntity extends BaseTimeEntity {
                 .id(memberContent.getId())
                 .memberId(memberContent.getMemberId())
                 .contentId(memberContent.getContentId())
+                .episodeNumber(memberContent.getEpisodeNumber())
                 .priceType(memberContent.getPriceType())
                 .build();
     }
