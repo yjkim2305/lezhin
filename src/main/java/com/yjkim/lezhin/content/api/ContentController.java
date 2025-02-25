@@ -36,7 +36,13 @@ public class ContentController {
         return ApiRes.createSuccessWithNoContent();
     }
 
-
+    /** 
+     * 등록된 작품 조회
+     * @param contentId 작품 ID
+     * @param request 클라이언트의 http 요청 객체(JWT 토큰을 추출하기 위해 사용됨)
+     * @return 요청한 작품 정보를 포함하는 객체
+     *         - 사용자가 성인 작품에 접근할 수 없는 경우: HTTP 403 FORBIDDEN
+     */
     @GetMapping("/{contentId}")
     public ApiRes<ContentDetailResponse> getContent(@PathVariable(value = "contentId") Long contentId, HttpServletRequest request) {
         String token = jwtUtil.getJwtFromRequest(request);
