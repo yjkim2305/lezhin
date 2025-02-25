@@ -38,6 +38,7 @@ public class ContentController {
 
     /***
      * 등록된 작품 조회
+     * 작품 조회 할 시 조회 이력을 적재 한다
      * @param contentId 작품 ID
      * @param request 클라이언트의 http 요청 객체(JWT 토큰을 추출하기 위해 사용됨)
      * @return 요청한 작품 정보를 포함하는 객체
