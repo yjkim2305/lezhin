@@ -36,7 +36,7 @@ public class ContentController {
         return ApiRes.createSuccessWithNoContent();
     }
 
-    /** 
+    /***
      * 등록된 작품 조회
      * @param contentId 작품 ID
      * @param request 클라이언트의 http 요청 객체(JWT 토큰을 추출하기 위해 사용됨)
