@@ -1,0 +1,16 @@
+### 작품 등록
+POST http://localhost:8080/api/v1/content
+Content-Type: application/json
+Authorization: {{ authorizationToken }}
+
+{
+  "title": "테스트 작품",
+  "author": "테스트 작가",
+  "contentType": "GENERAL",
+  "priceType": "FREE",
+  "totalEpisodes": 10
+}
+
+### 작품 조회
+GET http://localhost:8080/api/v1/content/1
+Authorization: {{ authorizationToken }}
