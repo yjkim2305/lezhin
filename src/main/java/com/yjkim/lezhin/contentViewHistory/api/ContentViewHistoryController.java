@@ -16,6 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class ContentViewHistoryController {
     private final ContentViewHistoryService contentViewHistoryService;
 
+    /***
+     * 작품별 조회 이력을 가져옵니다
+     * @param contentId 조회할 작품의 ID
+     * @param pageable 페이지네이션 정보(size, page)
+     * @return ContentViewHistoryResponse 객체
+     */
     @GetMapping("/{contentId}")
     public ApiRes<ContentViewHistoryResponse> getContentUserHistory(
             @PathVariable("contentId") Long contentId,
