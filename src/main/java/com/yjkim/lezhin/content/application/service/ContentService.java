@@ -33,9 +33,10 @@ public class ContentService {
         contentRepository.deleteContent(contentId);
     }
 
-    public void validateContent(Long contentId, boolean isAdult, int episodeNumber) {
+    public Content getValidateContent(Long contentId, boolean isAdult, int episodeNumber) {
         Content content = contentRepository.getContent(contentId);
         content.validateAdultAccess(isAdult);
         content.validateEpisode(episodeNumber);
+        return content;
     }
 }

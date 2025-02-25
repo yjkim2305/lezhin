@@ -1,5 +1,8 @@
 package com.yjkim.lezhin.memberContent.application.repository;
 
-public interface MemberContentRepository {
+import com.yjkim.lezhin.memberContent.domain.MemberContent;
 
+public interface MemberContentRepository {
+    boolean existMemberContent(Long memberId, Long contentId, int episodeNumber);
+    void registerMemberContent(MemberContent memberContent);
 }

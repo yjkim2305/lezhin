@@ -1,6 +1,7 @@
 package com.yjkim.lezhin.memberContent.facade;
 
 import com.yjkim.lezhin.content.application.service.ContentService;
+import com.yjkim.lezhin.content.domain.Content;
 import com.yjkim.lezhin.memberContent.application.service.MemberContentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -12,10 +13,9 @@ public class MemberContentFacade {
     private final MemberContentService memberContentService;
 
     public void purchaseContent(Long contentId, Long memberId, boolean isAdult, int episodeNumber) {
-        contentService.validateContent(contentId, isAdult, episodeNumber);
-        //사용자가 구매한 episodeNumber인지 중복체크
-        //memberContent에 save
-
-
+        //사용자가 작품 구매 시 성인인증과 에피소드 확인
+        Content validateContent = contentService.getValidateContent(contentId, isAdult, episodeNumber);
+        //사용자가 작품 구매
+        memberContentService.purchaseContent(contentId, memberId, episodeNumber, validateContent.getPriceType());
     }
 }
