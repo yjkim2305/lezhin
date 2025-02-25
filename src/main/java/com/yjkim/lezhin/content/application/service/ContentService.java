@@ -23,6 +23,7 @@ public class ContentService {
         Content content = contentRepository.getContent(contentId);
         content.validateAdultAccess(isAdult);
 
+        //작품 조회 시 조회에 대한 이력 저장
         applicationEventPublisher.publishEvent(new ContentViewEvent(contentId, memberId));
         return ContentResultDto.from(content);
     }
