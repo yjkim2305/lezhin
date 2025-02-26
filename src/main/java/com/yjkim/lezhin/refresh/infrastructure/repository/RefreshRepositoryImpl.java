@@ -1,6 +1,7 @@
 package com.yjkim.lezhin.refresh.infrastructure.repository;
 
 
+import com.yjkim.lezhin.refresh.application.repository.RefreshRepository;
 import com.yjkim.lezhin.refresh.domain.Refresh;
 import com.yjkim.lezhin.refresh.infrastructure.entity.RefreshEntity;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,7 @@
 package com.yjkim.lezhin.refresh.application.repository;
 
-import com.szs.szsyoungjunkim.refresh.domain.Refresh;
+
+import com.yjkim.lezhin.refresh.domain.Refresh;
 
 public interface RefreshRepository {
     Boolean existsByRefreshToken(String refreshToken);
