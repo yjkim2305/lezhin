@@ -43,7 +43,7 @@ public class MemberContentController {
      * @param memberId 조회할 사용자의 ID
      * @return 가장 많이 구매한 작품 상위 10개 리스트
      */
-    @GetMapping("/member/{memberId}/top-viewd")
+    @GetMapping("/member/{memberId}/top-viewed")
     public ApiRes<TopMemberContentResponse> getMemberContentTopView(@PathVariable(value = "memberId") String memberId) {
         return ApiRes.createSuccess(
                 TopMemberContentResponse.from(
