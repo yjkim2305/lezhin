@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/h2-console/**"
-                                , "/api/v1/auth/**").permitAll()
+                                , "/api/v1/auth/**", "/api/v1/refresh/reissue").permitAll()
                         .anyRequest()
                         .authenticated())
                 .sessionManagement((session) -> session
