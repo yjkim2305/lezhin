@@ -12,7 +12,12 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "member_content")
+
+@Table(name = "member_content",indexes = {
+        @Index(name = "idx_member_content_content_id", columnList = "contentId"),
+        @Index(name = "idx_member_content_member_id", columnList = "memberId"),
+        @Index(name = "idx_member_content_member_content_episode", columnList = "memberId, contentId, episodeNumber")
+} )
 public class MemberContentEntity extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
