@@ -14,16 +14,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Refresh {
     private Long id;
-    private String userId;
+    private String memberId;
     private String refreshToken;
     private LocalDateTime expiration;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
 
     @Builder
-    private Refresh(Long id, String userId, String refreshToken, LocalDateTime expiration, LocalDateTime createdDate, LocalDateTime updatedDate) {
+    private Refresh(Long id, String memberId, String refreshToken, LocalDateTime expiration, LocalDateTime createdDate, LocalDateTime updatedDate) {
         this.id = id;
-        this.userId = userId;
+        this.memberId = memberId;
         this.refreshToken = refreshToken;
         this.expiration = expiration;
         this.createdDate = createdDate;
@@ -33,7 +33,7 @@ public class Refresh {
     public static Refresh from(RefreshEntity refreshEntity) {
         return Refresh.builder()
                 .id(refreshEntity.getId())
-                .userId(refreshEntity.getUserId())
+                .memberId(refreshEntity.getMemberId())
                 .refreshToken(refreshEntity.getRefreshToken())
                 .expiration(refreshEntity.getExpiration())
                 .createdDate(refreshEntity.getCreatedDate())
@@ -43,7 +43,7 @@ public class Refresh {
 
     public static Refresh of(String userId, String refreshToken, Long expiredMs) {
         return Refresh.builder()
-                .userId(userId)
+                .memberId(userId)
                 .refreshToken(refreshToken)
                 .expiration(LocalDateTime.now().plus(Duration.ofMillis(expiredMs)))
                 .build();

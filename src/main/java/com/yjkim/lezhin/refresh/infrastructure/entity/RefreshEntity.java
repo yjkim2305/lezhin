@@ -20,14 +20,14 @@ public class RefreshEntity extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String userId;
+    private String memberId;
     private String refreshToken;
     private LocalDateTime expiration;
 
     @Builder
-    private RefreshEntity(Long id, String userId, String refreshToken, LocalDateTime expiration) {
+    private RefreshEntity(Long id, String memberId, String refreshToken, LocalDateTime expiration) {
         this.id = id;
-        this.userId = userId;
+        this.memberId = memberId;
         this.refreshToken = refreshToken;
         this.expiration = expiration;
     }
@@ -35,7 +35,7 @@ public class RefreshEntity extends BaseTimeEntity {
     public static RefreshEntity toEntity(Refresh refresh) {
         return RefreshEntity.builder()
                 .id(refresh.getId())
-                .userId(refresh.getUserId())
+                .memberId(refresh.getMemberId())
                 .refreshToken(refresh.getRefreshToken())
                 .expiration(refresh.getExpiration())
                 .build();
