@@ -1,0 +1,10 @@
+POST http://localhost:8080/api/v1/refresh/reissue
+Content-Type: application/json
+Cookie: refresh={{refreshToken}}
+
+> {%
+    client.global.set("authorizationToken", "Bearer " + response.body.data.accessToken);
+    client.global.set("refreshToken", response.body.data.refreshToken);
+    client.log("Auth Token: " + client.global.get("authorizationToken"));
+    client.log("Refresh Token: " + client.global.get("refreshToken"));
+%}
