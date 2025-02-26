@@ -2,12 +2,15 @@ package com.yjkim.lezhin.member.application.service;
 
 import com.yjkim.lezhin.common.util.JwtUtil;
 import com.yjkim.lezhin.member.domain.Member;
+import com.yjkim.lezhin.refresh.application.service.RefreshService;
 import jakarta.servlet.http.Cookie;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.LocalDate;
 
@@ -20,8 +23,18 @@ class AuthServiceTest {
     @Mock
     private JwtUtil jwtUtil;
 
+    @Mock
+    private RefreshService refreshService;
+
     @InjectMocks
     private AuthService authService;
+
+    private final Long refreshExpiration = 604800L;
+
+    @BeforeEach
+    void setUp() {
+        ReflectionTestUtils.setField(authService, "refreshExpiration", refreshExpiration);
+    }
 
     @Test
     void generateTokens_Success() {
@@ -38,6 +51,7 @@ class AuthServiceTest {
 
         when(jwtUtil.createAccessJwt("access", member.getId().toString(), member.isAdult())).thenReturn(accessToken);
         when(jwtUtil.createRefreshJwt("refresh", member.getId().toString(), member.isAdult())).thenReturn(refreshToken);
+        doNothing().when(refreshService).addRefreshToken(member.getId().toString(), refreshToken, refreshExpiration);
 
         authService.generateTokens(member);
 
