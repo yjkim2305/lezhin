@@ -10,7 +10,7 @@ spring:
     console:
       enabled: true
   jpa:
-    show-sql: true
+    show-sql: false
     generate-ddl: false
     open-in-view: false
     hibernate:
