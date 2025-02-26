@@ -46,4 +46,28 @@ class ContentTest {
         assertDoesNotThrow(() -> content.validateAdultAccess(true));
     }
 
+    @Test
+    @DisplayName("작품의 총 에피소드 수 보다 에피소드 번호가 크면 예외가 발생한다.")
+    void validateEpisode_Exception() {
+        Content content = Content.builder()
+                .totalEpisodes(10)
+                .build();
+
+        CoreException exception = assertThrows(CoreException.class, ()
+                -> content.validateEpisode(11));
+
+        assertThat(ContentErrorType.FORBIDDEN_EPISODE_CONTENT.getMessage()).isEqualTo(exception.getMessage());
+        assertThat(ContentErrorType.FORBIDDEN_EPISODE_CONTENT.name()).isEqualTo(exception.getErrorType().getErrorCode());
+    }
+
+    @Test
+    @DisplayName("작품의 총 에피소드 수 보다 에피소드 번호가 크지 않으면 예외가 발생하지 않는다.")
+    void validateEpisode() {
+        Content content = Content.builder()
+                .totalEpisodes(10)
+                .build();
+
+        assertDoesNotThrow(() -> content.validateEpisode(9));
+    }
+
 }
