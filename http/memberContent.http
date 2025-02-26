@@ -7,3 +7,7 @@ Authorization: {{authorizationToken}}
   "contentId": 1,
   "episodeNumber": 3
 }
+
+### 사용자가 가장 많이 구매한 작품 상위 10개 조회
+GET http://localhost:8080/api/v1/member-content/member/1/top-viewd
+Authorization: {{authorizationToken}}
