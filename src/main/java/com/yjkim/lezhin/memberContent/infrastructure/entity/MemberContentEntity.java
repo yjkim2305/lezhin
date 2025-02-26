@@ -14,8 +14,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 
 @Table(name = "member_content",indexes = {
-        @Index(name = "idx_member_content_content_id", columnList = "contentId"),
-        @Index(name = "idx_member_content_member_id", columnList = "memberId"),
         @Index(name = "idx_member_content_member_content_episode", columnList = "memberId, contentId, episodeNumber")
 } )
 public class MemberContentEntity extends BaseTimeEntity {
