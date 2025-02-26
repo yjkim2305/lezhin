@@ -59,14 +59,12 @@ class CustomContentViewHistoryJpaRepositoryImplTest {
                 .title("테스트 작품")
                 .author("테스트 작가")
                 .build();
-
         contentJpaRepository.save(content1);
 
         ContentEntity content2 = ContentEntity.builder()
                 .title("테스트 작품2")
                 .author("테스트 작가2")
                 .build();
-
         contentJpaRepository.save(content2);
 
         ContentViewHistoryEntity history = ContentViewHistoryEntity.builder()
