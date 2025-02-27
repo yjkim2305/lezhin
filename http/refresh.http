@@ -1,3 +1,4 @@
+### 리프레시 토큰으로 액세스 토큰 재발급
 POST http://localhost:8080/api/v1/refresh/reissue
 Content-Type: application/json
 Cookie: refresh={{refreshToken}}
