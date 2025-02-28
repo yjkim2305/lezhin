@@ -13,11 +13,16 @@ import java.time.LocalDateTime;
 
 @Getter
 @Entity
-@Table(name = "refresh")
+@Table(name = "refresh",
+        indexes = {
+                @Index(name = "idx_refresh_token", columnList = "refreshToken")
+        }
+)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RefreshEntity extends BaseTimeEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String memberId;
